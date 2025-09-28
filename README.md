@@ -1,1 +1,1 @@
-# Jarkom-Modul-1-2025-K-22
+# Laporan Resmi Praktikum Komunikasi Data dan Jaringan Komputer
