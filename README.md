@@ -44,6 +44,7 @@
         wget --no-check-certificate "https://docs.google.com/uc?export=download&id=1bE3kF1Nclw0VyKq4bL2VtOOt53IC7lG5" -O traffic.zip && unzip traffic.zip
         ./traffic.sh
      </pre>
+     ![alt text](assets/soal_6.png)
 7. Membuat dan konfigurasi FTP server pada node eru, dan buat 2 user baru.
    * install ftp server services
    <pre>
@@ -86,7 +87,10 @@
    userlist_file=/etc/vsftpd.userlist
    userlist_deny=NO
    EOF
-                                             
+    </pre>        
+    ![alt text](assets/soal_7.png)                                 
+    ![alt text](assets/soal_7_2.png)                                 
+    ![alt text](assets/soal_7_3.png)                                 
 
 8. Melakukan koneksi dari node ulmo ke FTP Server eru
    * download file diluar ftp dan unzip
@@ -117,6 +121,7 @@
    userlist_file=/etc/vsftpd.userlist
    userlist_deny=NO
    </pre>
+   ![alt text](assets/soal_8.png)  
 
    * command start server
      <pre>
@@ -126,6 +131,7 @@
      <pre>
          put cuaca.txt
      </pre>
+     ![alt text](assets/soal_8.png)  
    
 9. Download file dari FTP Server eru ke node manwe. dan rubah hak akses
     * download file di node server/eru di direktorti /shared dan unzip
@@ -143,10 +149,13 @@
       </pre>
 
    * Testing
+   ![alt text](assets/soal_9.png) 
+   ![alt text](assets/soal_9_2.png) 
 10. ping ke server eru melalui melkor
     <pre>
        ping 192.222.1.1 -c 100
     </pre>
+    ![alt text](assets/soal_10.png) 
 11. Buat user baru pada node melkor dan masuk dengan telnet melalui node eru
    * Buat user baru
       <pre>
@@ -214,7 +223,7 @@
       <pre>
         apt update && apt install -y netcat-traditional
       </pre>
-
+      ![alt text](assets/soal_12.png) 
 13. Lakukan koneksi SSH dari node Varda ke Eru
    * Install dan jalankan SSH server di node ERU
       <pre>
@@ -236,7 +245,7 @@
       <pre>
         ssh varda_user@192.222.2.1
       </pre>
-
+      ![alt text](assets/soal_13.png) 
 ### Soal 14
 
 Setelah gagal mengakses FTP, Melkor melancarkan serangan brute force terhadap  Manwe. Analisis file capture yang disediakan dan identifikasi upaya brute force Melkor. 
