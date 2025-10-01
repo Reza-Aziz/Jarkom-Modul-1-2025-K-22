@@ -1,4 +1,20 @@
 # Laporan Resmi Praktikum Komunikasi Data dan Jaringan Komputer
+
+# Jarkom K22
+
+## Member
+
+| No  | Nama                   | NRP        |
+| --- | ---------------------- | ---------- |
+| 1   | Kanafira Vanesha Putri | 5027241010 |
+| 2   | Reza Aziz Simatupang   | 5027241051 |
+
+## Reporting
+
+### Soal 1
+
+#### Penjelasan
+
 1. Membuat topologi jaringan
 2. Menyambungkan node eru ke koneksi internet
 3. Menghubungkan antar node client
@@ -48,10 +64,8 @@
    * edit config ftp
    <pre>
    cp /etc/vsftpd.conf /etc/vsftpd.conf.backup
-   nano /etc/vsftpd.conf > /dev/null                                                  
-   </pre>
-   <pre>
-   listen=YES
+   sudo tee /etc/vsftpd.conf > /dev/null <<EOF
+listen=YES
    anonymous_enable=NO
    local_enable=YES
    write_enable=YES
@@ -71,54 +85,9 @@
    userlist_enable=YES
    userlist_file=/etc/vsftpd.userlist
    userlist_deny=NO
-   </pre>
+   EOF
+                                             
 
-    * setup use permission
-   <pre>
-   echo "ainur" > /etc/vsftpd.userlist
-   chown ainur:ainur /shared
-   chmod 755 /shared
-   mkdir -p /etc/vsftpd/user_conf
-   echo "local_root=/home/melkor" > /etc/vsftpd/user_conf/melkor
-   echo "user_config_dir=/etc/vsftpd/user_conf" >> /etc/vsftpd.conf                                                 
-   </pre>
-
-    * buat test file
-   <pre>
-   cecho "This is a shared file for Ainur group" > /shared/test.txt
-   chown ainur:ainur /shared/test.txt
-   chmod 644 /shared/test.txt                                                  
-   </pre>
-
-   * Start FTP Service
-   <pre>
-   service vsftpd start
-   service vsftpd status
-   netstat -tuln | grep :21                                                  
-   </pre>
-
-   * Buat client
-   <pre>
-   apt update
-   apt install netbase                                              
-   </pre>
-
-   * testing
-   <pre>
-   ftp 192.222.1.1
-   Name: manwe
-   Password: pass123
-   ftp> cd /shared
-   ftp> ls
-   test.txt
-   test_file.txt
-   ftp> get test_file.txt
-   ftp> quit                                               
-   </pre>
-
-   
-
-   
 8. Melakukan koneksi dari node ulmo ke FTP Server eru
    * download file diluar ftp dan unzip
      <pre>
@@ -158,7 +127,6 @@
          put cuaca.txt
      </pre>
    
-   
 9. Download file dari FTP Server eru ke node manwe. dan rubah hak akses
     * download file di node server/eru di direktorti /shared dan unzip
       <pre>
@@ -179,13 +147,205 @@
     <pre>
        ping 192.222.1.1 -c 100
     </pre>
+11. ping ke server eru melalui melkor
 12. Buat user baru pada node melkor dan masuk dengan telnet melalui node eru
 13. Port scanning node melkor memalui node eru dengan netcat
-14. Menerapkan koneksi SSH dari node varda ke eru
-15.
-16.
-17.
-18.
-19.
-20.
-   .
+
+### Soal 14
+
+#### Penjelasan
+
+Setelah gagal mengakses FTP, Melkor melancarkan serangan brute force terhadap  Manwe. Analisis file capture yang disediakan dan identifikasi upaya brute force Melkor. 
+nc 10.15.43.32 3401
+Pertama kita melakukan download file lalu mengextract file dan memasukkan file pcap kedalam wireshark.
+A) Pockets didapatkan dari ujung bawah dari wiresharknya
+
+![alt text](assets/soal_14/A.png)
+
+
+B) User yang berhasil login didapatkan dari tcp.ack
+
+![alt text](assets/soal_14/B.png)
+
+
+C) Credential ditemukan pada stream 
+
+![alt text](assets/soal_14/C.png)
+
+
+D) Tools yang digunakan juga terdapat pada file yang sama
+
+![alt text](assets/soal_14/D.png)
+
+
+Final Result
+
+![alt text](assets/soal_14/Final.png)
+
+
+```c
+Flag : KOMJAR25{Brut3_F0rc3_XdqBYx9g6IbNfByDi79FAkhSe}
+```
+
+### Soal 15
+
+#### Penjelasan
+
+Melkor menyusup ke ruang server dan memasang keyboard USB berbahaya pada node Manwe. Buka file capture dan identifikasi pesan atau ketikan (keystrokes) yang berhasil nc 10.15.43.32 3402
+<insert screenshoot>
+
+<...>
+
+### Soal 16
+
+#### Penjelasan
+
+Melkor semakin murka ia meletakkan file berbahaya di server milik Manwe. Dari file capture yang ada, identifikasi file apa yang diletakkan oleh Melkor.
+nc 10.15.43.32 3403
+A) Credential account didapatkan ftp lalu melakukan follow > tcp stream
+
+![alt text](assets/soal_16/A.png)
+
+B) Tipe file malware biasanya diakhiri dengan .exe sehingga didapatkan 5 (e.exe, t.exe, q.exe, w.exe, r.exe)
+
+![alt text](assets/soal_16/B.png)
+
+
+C) Mencari pada tipe tcp-data dan menyesuaikan nama file yang diminta lalu dilakukan follow > tcp stream lalu disave dalam bentuk raw dan mengeceknya dengan bash : sha256sum
+
+![alt text](assets/soal_16/C.png)
+
+
+Final Result
+
+![alt text](assets/soal_16/Final.png)
+
+
+```c
+Flag: KOMJAR25{Y0u_4r3_4_g00d_4nalyz3r_dpDmrUogkWsETINFHLvRJzgmE}
+```
+
+### Soal 17
+
+#### Penjelasan
+
+Manwe membuat halaman web di node-nya yang menampilkan gambar cincin agung. Melkor yang melihat web tersebut merasa iri sehingga ia meletakkan file berbahaya agar web tersebut dapat dianggap menyebarkan malware oleh Eru. Analisis file capture untuk menggagalkan rencana Melkor dan menyelamatkan web Manwe.
+nc 10.15.43.32 3404
+A) Mencari suspicius file pertama dengan cara ke file > Export Object > HTTP 
+
+![alt text](assets/soal_17/A.png)
+
+
+B) Mencari suspicius file kedua dengan cara ke file > Export Object > HTTP 
+
+![alt text](assets/soal_17/B.png)
+
+
+C) File disave dalam bentuk raw dan mengeceknya dengan bash : sha256sum
+
+![alt text](assets/soal_17/C.png)
+
+
+Final Result
+
+![alt text](assets/soal_17/Final.png)
+
+
+```c
+Flag: KOMJAR25{M4ster_4n4lyzer_obZvLm1rkICwPaMp5mqzxxeZG}
+```
+
+### Soal 18
+
+#### Penjelasan
+
+Karena rencana Melkor yang terus gagal, ia akhirnya berhenti sejenak untuk berpikir. Pada saat berpikir ia akhirnya memutuskan untuk membuat rencana jahat lainnya dengan meletakkan file berbahaya lagi tetapi dengan metode yang berbeda. Gagalkan lagi rencana Melkor dengan mengidentifikasi file capture yang disediakan agar dunia tetap aman.
+nc 10.15.43.32 3405
+A) Sama seperti nomor sebelumnya, malware dapat di cek di file -> Export Object -> SMB, ciri file malware biasanya ada .exe disini terdapat 2 file yang berakhiran .exe
+
+![alt text](assets/soal_18/A.png)
+
+
+B) Begitu juga untuk file kedua 
+
+![alt text](assets/soal_18/B.png)
+
+
+C) File disave dalam bentuk raw dan mengeceknya dengan bash : sha256sum
+
+![alt text](assets/soal_18/C.png)
+
+
+D) File disave dalam bentuk raw dan mengeceknya dengan bash : sha256sum
+
+![alt text](assets/soal_18/D.png)
+
+
+Final Result
+
+![alt text](assets/soal_18/Final.png)
+
+
+```c
+Flag: KOMJAR25{Y0u_4re_g0dl1ke_LjLDqS3jmiFVH8DSJ4Y7b4Lh5}
+```
+
+### Soal 19
+
+#### Penjelasan
+
+Manwe mengirimkan email berisi surat cinta kepada Varda melalui koneksi yang tidak terenkripsi. Melihat hal itu Melkor sipaling jahat langsung melancarkan aksinya yaitu meneror Varda dengan email yang disamarkan. Analisis file capture jaringan dan gagalkan lagi rencana busuk Melkor.
+nc 10.15.43.32 3406
+A) Pertama lakukan filter menggunakan tcp.ack lalu cari file yang memiliki RST file
+
+![alt text](assets/soal_19/A.png)
+
+
+B) Pada 1 file yang sama didapatkan juga
+
+![alt text](assets/soal_19/B.png)
+
+
+C) Pada 1 file yang sama juga didapatkan juga
+
+![alt text](assets/soal_19/C.png)
+
+
+Final Result 
+
+![alt text](assets/soal_19/Final.png)
+
+
+```c
+Flag : KOMJAR25{Y0u_4re_J4rk0m_G0d_Z0NSSjcLMpgVsVrkP4nEeE0u5}
+```
+
+### Soal 20
+
+#### Penjelasan
+
+Untuk yang terakhir kalinya, rencana besar Melkor yaitu menanamkan sebuah file berbahaya kemudian menyembunyikannya agar tidak terlihat oleh Eru. Tetapi Manwë yang sudah merasakan adanya niat jahat dari Melkor, ia menyisipkan bantuan untuk mengungkapkan rencana Melkor. Analisis file capture dan identifikasi kegunaan bantuan yang diberikan oleh Manwe untuk menggagalkan rencana jahat Melkor selamanya.
+nc 10.15.43.32 3407
+A) TLSv1.2. Adalah protoko; TLS yang berfungsi untuk berkomunikasi, namun data tidak terkirim dalam bentuk plain text. Jadi, encryption methode yang digunakan untuk capture ini adalah TLS
+
+![alt text](assets/soal_20/A.png)
+
+
+B) Lalu memasukkan file yang ada di drive (keyslogfile.txt) ke Edit  > Preferences > Protocol -> TLS > Masukkan keyslogfile.txt > Apply Lalu sama seperti step pada soal sebelumnya File > Export Objects > HTTP
+
+![alt text](assets/soal_20/B.png)
+
+
+C) File disave dalam bentuk raw dan mengeceknya dengan bash : sha256sum
+
+![alt text](assets/soal_20/C.png)
+
+
+Final Result
+
+![alt text](assets/soal_20/Final.png)
+
+
+```c
+Flag: KOMJAR25{B3ware_0f_M4lw4re_IDp0HIV4ozdW6kFbumqxdJe9B}
+```
