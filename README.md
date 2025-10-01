@@ -64,8 +64,8 @@
    * edit config ftp
    <pre>
    cp /etc/vsftpd.conf /etc/vsftpd.conf.backup
-   sudo tee /etc/vsftpd.conf > /dev/null <<EOF
-listen=YES
+   sudo tee /etc/vsftpd.conf > /dev/null << EOF
+   listen=YES
    anonymous_enable=NO
    local_enable=YES
    write_enable=YES
@@ -147,9 +147,95 @@ listen=YES
     <pre>
        ping 192.222.1.1 -c 100
     </pre>
-11. ping ke server eru melalui melkor
-12. Buat user baru pada node melkor dan masuk dengan telnet melalui node eru
-13. Port scanning node melkor memalui node eru dengan netcat
+11. Buat user baru pada node melkor dan masuk dengan telnet melalui node eru
+   * Buat user baru
+      <pre>
+         id eru_test >/dev/null 2>&1 || useradd -m -s /bin/bash eru_test
+         passwd eru_test
+         id eru_test
+      </pre>
+
+   * Update & install telnet service
+      <pre>
+         apt update
+         apt install -y openbsd-inetd telnetd || apt install -y inetutils-inetd inetutils-telnetd || true
+      </pre>
+
+   * Restart service inetd
+      <pre>
+         /etc/init.d/openbsd-inetd restart 2>/dev/null || /etc/init.d/inetutils-inetd restart 2>/dev/null || service xinetd restart 2>/dev/null || true
+      </pre>
+
+   * Tambahkan konfigurasi telnet ke inetd.conf
+      <pre>
+         grep -q '^telnet' /etc/inetd.conf 2>/dev/null || cat >> /etc/inetd.conf <<'EOF'
+         telnet  stream  tcp     nowait  root    /usr/sbin/in.telnetd in.telnetd
+         EOF
+      </pre>
+
+   * Buat symbolic link telnetd → in.telnetd
+      <pre>
+         ln -s /usr/sbin/telnetd /usr/sbin/in.telnetd
+         ls -l /usr/sbin/in.telnetd
+      </pre>
+
+   * Restart inetd kembali
+      <pre>
+         /etc/init.d/openbsd-inetd restart 2>/dev/null || /etc/init.d/inetutils-inetd restart 2>/dev/null || service openbsd-inetd restart 2>/dev/null || true
+      </pre>
+
+   * Verifikasi listener port 23
+      <pre>
+         ss -tulpn | grep :23 || netstat -tulpn | grep :23 || echo "no listener on :23 yet"
+      </pre>
+
+   * Lakukan koneksi telnet ke Melkor pada ERU
+      <pre>
+        telnet 10.94.1.2
+      </pre>
+
+   * Login sebagai user
+      
+12. Port scanning node melkor memalui node eru dengan netcat
+   * Install netcat pada eru
+      <pre>
+        apt update && apt install -y netcat-traditional
+      </pre>
+   * Scan port 21, 80, 666 pada Melkor
+      <pre>
+      nc -zv 192.222.1.2 21 80 666
+      </pre>
+   * buka listener untuk testing pada melkor
+      <pre>
+      nc -l -p 21 &
+      nc -l -p 80 &
+      </pre>
+   * Install netcat (traditional)
+      <pre>
+        apt update && apt install -y netcat-traditional
+      </pre>
+
+13. Lakukan koneksi SSH dari node Varda ke Eru
+   * Install dan jalankan SSH server di node ERU
+      <pre>
+        apt update && apt install -y openssh-server
+         service ssh start
+         service ssh status
+      </pre>
+
+   * Buat user baru untuk login
+      <pre>
+        useradd -m -s /bin/bash varda_user
+         echo "varda_user:secretpass456" | chpasswd
+      </pre>
+   * Install SSH client pada node varda
+      <pre>
+        apt install -y openssh-client
+      </pre>
+   * Lakukan login ke ERU
+      <pre>
+        ssh varda_user@192.222.2.1
+      </pre>
 
 ### Soal 14
 
