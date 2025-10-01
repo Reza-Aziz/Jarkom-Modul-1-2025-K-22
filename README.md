@@ -8,10 +8,10 @@
 7. Membuat dan konfigurasi FTP server pada node eru, dan buat 2 user baru.
 8. Melakukan koneksi dari node ulmo ke FTP Server eru
 9. Download file dari FTP Server eru ke node manwe. dan rubah hak akses
-10.
-11.
-12.
-13.
+10. ping ke server eru melalui melkor
+11. Buat user baru pada node melkor dan masuk dengan telnet melalui node eru
+12. Port scanning node melkor memalui node eru dengan netcat
+13. Menerapkan koneksi SSH dari node varda ke eru
 14.
 15.
 16.
