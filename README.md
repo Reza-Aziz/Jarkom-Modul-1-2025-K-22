@@ -48,8 +48,10 @@
    * edit config ftp
    <pre>
    cp /etc/vsftpd.conf /etc/vsftpd.conf.backup
-   sudo tee /etc/vsftpd.conf > /dev/null <<EOF
-listen=YES
+   nano /etc/vsftpd.conf > /dev/null                                                  
+   </pre>
+   <pre>
+   listen=YES
    anonymous_enable=NO
    local_enable=YES
    write_enable=YES
@@ -69,16 +71,114 @@ listen=YES
    userlist_enable=YES
    userlist_file=/etc/vsftpd.userlist
    userlist_deny=NO
-   EOF
-                                             
-   
-                                             
+   </pre>
+
+    * setup use permission
+   <pre>
+   echo "ainur" > /etc/vsftpd.userlist
+   chown ainur:ainur /shared
+   chmod 755 /shared
+   mkdir -p /etc/vsftpd/user_conf
+   echo "local_root=/home/melkor" > /etc/vsftpd/user_conf/melkor
+   echo "user_config_dir=/etc/vsftpd/user_conf" >> /etc/vsftpd.conf                                                 
+   </pre>
+
+    * buat test file
+   <pre>
+   cecho "This is a shared file for Ainur group" > /shared/test.txt
+   chown ainur:ainur /shared/test.txt
+   chmod 644 /shared/test.txt                                                  
+   </pre>
+
+   * Start FTP Service
+   <pre>
+   service vsftpd start
+   service vsftpd status
+   netstat -tuln | grep :21                                                  
+   </pre>
+
+   * Buat client
+   <pre>
+   apt update
+   apt install netbase                                              
+   </pre>
+
+   * testing
+   <pre>
+   ftp 192.222.1.1
+   Name: manwe
+   Password: pass123
+   ftp> cd /shared
+   ftp> ls
+   test.txt
+   test_file.txt
+   ftp> get test_file.txt
+   ftp> quit                                               
    </pre>
 
    
-9. Melakukan koneksi dari node ulmo ke FTP Server eru
-10. Download file dari FTP Server eru ke node manwe. dan rubah hak akses
-11. ping ke server eru melalui melkor
+
+   
+8. Melakukan koneksi dari node ulmo ke FTP Server eru
+   * download file diluar ftp dan unzip
+     <pre>
+        wget --no-check-certificate "https://docs.google.com/uc?export=download&id=11ra_yTV_adsPIXeIPMSt0vrxCBZu0r33" -O cuaca.zip && unzip cuaca.zip
+     </pre>
+
+     * config ulang pada /etc/vsftpd.conf
+       <pre>
+   listen=YES
+   anonymous_enable=NO
+   local_enable=YES
+   write_enable=YES
+   local_umask=022
+   dirmessage_enable=YES
+   use_localtime=YES
+   xferlog_enable=YES
+   connect_from_port_20=YES
+   chroot_local_user=YES
+   local_root=/
+   allow_writeable_chroot=YES
+   secure_chroot_dir=/var/run/vsftpd/empty
+   pam_service_name=vsftpd
+   pasv_enable=YES
+   pasv_min_port=21100
+   pasv_max_port=21110
+   userlist_enable=YES
+   userlist_file=/etc/vsftpd.userlist
+   userlist_deny=NO
+   </pre>
+
+   * command start server
+     <pre>
+        service vsftpd restart
+     </pre>
+   * masuk ke ftp server di node ulmo, lalu cd /shared kirim kan file dari luar fp ke ftp
+     <pre>
+         put cuaca.txt
+     </pre>
+   
+   
+9. Download file dari FTP Server eru ke node manwe. dan rubah hak akses
+    * download file di node server/eru di direktorti /shared dan unzip
+      <pre>
+         wget --no-check-certificate "https://docs.google.com/uc?export=download&id=11ua2KgBu3MnHEIjhBnzqqv2RMEiJsILY" -O kitab_penciptaan.zip
+      </pre>
+    * dinode manwe login ftp, dan cd ke /shared. lalu get
+    <pre>
+        get kitab_penciptaan.txt
+    </pre>
+
+    * Pada node eru rubah mode ainur agar read only
+      <pre>
+         chmod 555 /home/ainur
+      </pre>
+
+   * Testing
+10. ping ke server eru melalui melkor
+    <pre>
+       ping 192.222.1.1 -c 100
+    </pre>
 12. Buat user baru pada node melkor dan masuk dengan telnet melalui node eru
 13. Port scanning node melkor memalui node eru dengan netcat
 14. Menerapkan koneksi SSH dari node varda ke eru
