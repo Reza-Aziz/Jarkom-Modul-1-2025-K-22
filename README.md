@@ -160,27 +160,27 @@ nc 10.15.43.32 3401
 Pertama kita melakukan download file lalu mengextract file dan memasukkan file pcap kedalam wireshark.
 A) Pockets didapatkan dari ujung bawah dari wiresharknya
 
-![alt text](assets/soal_14/A.png)
+![alt text](assets/soal_14_A.png)
 
 
 B) User yang berhasil login didapatkan dari tcp.ack
 
-![alt text](assets/soal_14/B.png)
+![alt text](assets/soal_14_B.png)
 
 
 C) Credential ditemukan pada stream 
 
-![alt text](assets/soal_14/C.png)
+![alt text](assets/soal_14_C.png)
 
 
 D) Tools yang digunakan juga terdapat pada file yang sama
 
-![alt text](assets/soal_14/D.png)
+![alt text](assets/soal_14_D.png)
 
 
 Final Result
 
-![alt text](assets/soal_14/Final.png)
+![alt text](assets/soal_14_Final.png)
 
 
 ```c
@@ -204,21 +204,21 @@ Melkor semakin murka ia meletakkan file berbahaya di server milik Manwe. Dari fi
 nc 10.15.43.32 3403
 A) Credential account didapatkan ftp lalu melakukan follow > tcp stream
 
-![alt text](assets/soal_16/A.png)
+![alt text](assets/soal_16_A.png)
 
 B) Tipe file malware biasanya diakhiri dengan .exe sehingga didapatkan 5 (e.exe, t.exe, q.exe, w.exe, r.exe)
 
-![alt text](assets/soal_16/B.png)
+![alt text](assets/soal_16_B.png)
 
 
 C) Mencari pada tipe tcp-data dan menyesuaikan nama file yang diminta lalu dilakukan follow > tcp stream lalu disave dalam bentuk raw dan mengeceknya dengan bash : sha256sum
 
-![alt text](assets/soal_16/C.png)
+![alt text](assets/soal_16_C.png)
 
 
 Final Result
 
-![alt text](assets/soal_16/Final.png)
+![alt text](assets/soal_16_Final.png)
 
 
 ```c
@@ -233,22 +233,22 @@ Manwe membuat halaman web di node-nya yang menampilkan gambar cincin agung. Melk
 nc 10.15.43.32 3404
 A) Mencari suspicius file pertama dengan cara ke file > Export Object > HTTP 
 
-![alt text](assets/soal_17/A.png)
+![alt text](assets/soal_17_A.png)
 
 
 B) Mencari suspicius file kedua dengan cara ke file > Export Object > HTTP 
 
-![alt text](assets/soal_17/B.png)
+![alt text](assets/soal_17_B.png)
 
 
 C) File disave dalam bentuk raw dan mengeceknya dengan bash : sha256sum
 
-![alt text](assets/soal_17/C.png)
+![alt text](assets/soal_17_C.png)
 
 
 Final Result
 
-![alt text](assets/soal_17/Final.png)
+![alt text](assets/soal_17_Final.png)
 
 
 ```c
@@ -263,27 +263,27 @@ Karena rencana Melkor yang terus gagal, ia akhirnya berhenti sejenak untuk berpi
 nc 10.15.43.32 3405
 A) Sama seperti nomor sebelumnya, malware dapat di cek di file -> Export Object -> SMB, ciri file malware biasanya ada .exe disini terdapat 2 file yang berakhiran .exe
 
-![alt text](assets/soal_18/A.png)
+![alt text](assets/soal_18_A.png)
 
 
 B) Begitu juga untuk file kedua 
 
-![alt text](assets/soal_18/B.png)
+![alt text](assets/soal_18_B.png)
 
 
 C) File disave dalam bentuk raw dan mengeceknya dengan bash : sha256sum
 
-![alt text](assets/soal_18/C.png)
+![alt text](assets/soal_18_C.png)
 
 
 D) File disave dalam bentuk raw dan mengeceknya dengan bash : sha256sum
 
-![alt text](assets/soal_18/D.png)
+![alt text](assets/soal_18_D.png)
 
 
 Final Result
 
-![alt text](assets/soal_18/Final.png)
+![alt text](assets/soal_18_Final.png)
 
 
 ```c
@@ -298,22 +298,21 @@ Manwe mengirimkan email berisi surat cinta kepada Varda melalui koneksi yang tid
 nc 10.15.43.32 3406
 A) Pertama lakukan filter menggunakan tcp.ack lalu cari file yang memiliki RST file
 
-![alt text](assets/soal_19/A.png)
+![alt text](assets/soal_19_A.png)
 
 
 B) Pada 1 file yang sama didapatkan juga
 
-![alt text](assets/soal_19/B.png)
-
+![alt text](assets/soal_19_B.png)
 
 C) Pada 1 file yang sama juga didapatkan juga
 
-![alt text](assets/soal_19/C.png)
+![alt text](assets/soal_19_C.png)
 
 
 Final Result 
 
-![alt text](assets/soal_19/Final.png)
+![alt text](assets/soal_19_Final.png)
 
 
 ```c
@@ -328,22 +327,23 @@ Untuk yang terakhir kalinya, rencana besar Melkor yaitu menanamkan sebuah file b
 nc 10.15.43.32 3407
 A) TLSv1.2. Adalah protoko; TLS yang berfungsi untuk berkomunikasi, namun data tidak terkirim dalam bentuk plain text. Jadi, encryption methode yang digunakan untuk capture ini adalah TLS
 
-![alt text](assets/soal_20/A.png)
+![alt text](assets/soal_20_A.png)
 
 
 B) Lalu memasukkan file yang ada di drive (keyslogfile.txt) ke Edit  > Preferences > Protocol -> TLS > Masukkan keyslogfile.txt > Apply Lalu sama seperti step pada soal sebelumnya File > Export Objects > HTTP
 
-![alt text](assets/soal_20/B.png)
+![alt text](assets/soal_20_B1.png)
 
+![alt text](assets/soal_20_B2.png)
 
 C) File disave dalam bentuk raw dan mengeceknya dengan bash : sha256sum
 
-![alt text](assets/soal_20/C.png)
+![alt text](assets/soal_20_C.png)
 
 
 Final Result
 
-![alt text](assets/soal_20/Final.png)
+![alt text](assets/soal_20_Final.png)
 
 
 ```c
