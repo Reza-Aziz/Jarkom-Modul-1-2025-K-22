@@ -239,11 +239,14 @@
 
 ### Soal 14
 
+Setelah gagal mengakses FTP, Melkor melancarkan serangan brute force terhadap  Manwe. Analisis file capture yang disediakan dan identifikasi upaya brute force Melkor. 
+
+nc 10.15.43.32 3401
+
 #### Penjelasan
 
-Setelah gagal mengakses FTP, Melkor melancarkan serangan brute force terhadap  Manwe. Analisis file capture yang disediakan dan identifikasi upaya brute force Melkor. 
-nc 10.15.43.32 3401
 Pertama kita melakukan download file lalu mengextract file dan memasukkan file pcap kedalam wireshark.
+
 A) Pockets didapatkan dari ujung bawah dari wiresharknya
 
 ![alt text](assets/soal_14_A.png)
@@ -275,19 +278,50 @@ Flag : KOMJAR25{Brut3_F0rc3_XdqBYx9g6IbNfByDi79FAkhSe}
 
 ### Soal 15
 
+Melkor menyusup ke ruang server dan memasang keyboard USB berbahaya pada node Manwe. Buka file capture dan identifikasi pesan atau ketikan (keystrokes) yang berhasil 
+
+nc 10.15.43.32 3402
+
 #### Penjelasan
 
-Melkor menyusup ke ruang server dan memasang keyboard USB berbahaya pada node Manwe. Buka file capture dan identifikasi pesan atau ketikan (keystrokes) yang berhasil nc 10.15.43.32 3402
-<insert screenshoot>
+A) Disini kita bisa lihat melalui string deskriptor untuk mengetahui nya dimana disini bertuliskan Keyboard
 
-<...>
+![alt text](assets/soal_15_A.png)
+
+
+B) Pada soal ini kita filter menggunakan frame.len == 35
+
+![alt text](assets/soal_15_B1.png)
+
+![alt text](assets/soal_15_B2.png)
+
+Setelah di download file csv nya buat decode menggunakan script.py
+
+![alt text](assets/soal_15_B3.png)
+
+
+C) Lalu melakukan decode menggunakan base64
+
+![alt text](assets/soal_15_C.png)
+
+
+Final Result
+
+![alt text](assets/soal_15_Final.png)
+
+
+```c
+Flag: KOMJAR25{K3yb0ard_W4rr10r_Idaod1zcnxKAB0VV8isnDgweU}
+```
 
 ### Soal 16
 
 #### Penjelasan
 
 Melkor semakin murka ia meletakkan file berbahaya di server milik Manwe. Dari file capture yang ada, identifikasi file apa yang diletakkan oleh Melkor.
+
 nc 10.15.43.32 3403
+
 A) Credential account didapatkan ftp lalu melakukan follow > tcp stream
 
 ![alt text](assets/soal_16_A.png)
@@ -316,7 +350,9 @@ Flag: KOMJAR25{Y0u_4r3_4_g00d_4nalyz3r_dpDmrUogkWsETINFHLvRJzgmE}
 #### Penjelasan
 
 Manwe membuat halaman web di node-nya yang menampilkan gambar cincin agung. Melkor yang melihat web tersebut merasa iri sehingga ia meletakkan file berbahaya agar web tersebut dapat dianggap menyebarkan malware oleh Eru. Analisis file capture untuk menggagalkan rencana Melkor dan menyelamatkan web Manwe.
+
 nc 10.15.43.32 3404
+
 A) Mencari suspicius file pertama dengan cara ke file > Export Object > HTTP 
 
 ![alt text](assets/soal_17_A.png)
@@ -346,7 +382,9 @@ Flag: KOMJAR25{M4ster_4n4lyzer_obZvLm1rkICwPaMp5mqzxxeZG}
 #### Penjelasan
 
 Karena rencana Melkor yang terus gagal, ia akhirnya berhenti sejenak untuk berpikir. Pada saat berpikir ia akhirnya memutuskan untuk membuat rencana jahat lainnya dengan meletakkan file berbahaya lagi tetapi dengan metode yang berbeda. Gagalkan lagi rencana Melkor dengan mengidentifikasi file capture yang disediakan agar dunia tetap aman.
+
 nc 10.15.43.32 3405
+
 A) Sama seperti nomor sebelumnya, malware dapat di cek di file -> Export Object -> SMB, ciri file malware biasanya ada .exe disini terdapat 2 file yang berakhiran .exe
 
 ![alt text](assets/soal_18_A.png)
@@ -381,7 +419,9 @@ Flag: KOMJAR25{Y0u_4re_g0dl1ke_LjLDqS3jmiFVH8DSJ4Y7b4Lh5}
 #### Penjelasan
 
 Manwe mengirimkan email berisi surat cinta kepada Varda melalui koneksi yang tidak terenkripsi. Melihat hal itu Melkor sipaling jahat langsung melancarkan aksinya yaitu meneror Varda dengan email yang disamarkan. Analisis file capture jaringan dan gagalkan lagi rencana busuk Melkor.
+
 nc 10.15.43.32 3406
+
 A) Pertama lakukan filter menggunakan tcp.ack lalu cari file yang memiliki RST file
 
 ![alt text](assets/soal_19_A.png)
@@ -410,7 +450,9 @@ Flag : KOMJAR25{Y0u_4re_J4rk0m_G0d_Z0NSSjcLMpgVsVrkP4nEeE0u5}
 #### Penjelasan
 
 Untuk yang terakhir kalinya, rencana besar Melkor yaitu menanamkan sebuah file berbahaya kemudian menyembunyikannya agar tidak terlihat oleh Eru. Tetapi Manwë yang sudah merasakan adanya niat jahat dari Melkor, ia menyisipkan bantuan untuk mengungkapkan rencana Melkor. Analisis file capture dan identifikasi kegunaan bantuan yang diberikan oleh Manwe untuk menggagalkan rencana jahat Melkor selamanya.
+
 nc 10.15.43.32 3407
+
 A) TLSv1.2. Adalah protoko; TLS yang berfungsi untuk berkomunikasi, namun data tidak terkirim dalam bentuk plain text. Jadi, encryption methode yang digunakan untuk capture ini adalah TLS
 
 ![alt text](assets/soal_20_A.png)
