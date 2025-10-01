@@ -1,8 +1,8 @@
 # Laporan Resmi Praktikum Komunikasi Data dan Jaringan Komputer
 1. Membuat topologi jaringan
-2. -
-3. -
-4. -
+2. Menyambungkan node eru ke koneksi internet
+3. Menghubungkan antar node client
+4. Menyambungkan client ainur ke koneksi internet
 5. Menginput script ke /root/.bashrc 
 6. Execute file traffic.sh dan packet sniffing di wireshark
 7. Membuat dan konfigurasi FTP server pada node eru, dan buat 2 user baru.
