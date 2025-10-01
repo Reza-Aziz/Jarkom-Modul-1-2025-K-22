@@ -16,9 +16,13 @@
 #### Penjelasan
 
 1. Membuat topologi jaringan
+   ![alt text](assets/soal_1.png) 
 2. Menyambungkan node eru ke koneksi internet
+   * Node eru/router disambungkan ke NAT
 3. Menghubungkan antar node client
+   * Node client disambungkan kepada masing" gateway
 4. Menyambungkan client ainur ke koneksi internet
+   * Melakukan configurasi pada masing" node client/router, sesuai nomer 5
 5. Menginput script ke /root/.bashrc.
 * Pada node eru
 <pre>
